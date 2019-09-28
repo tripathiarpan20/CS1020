@@ -1,0 +1,30 @@
+class Traversal
+{
+    static boolean visi[];
+    static Stack<Integer> s = new Stack<Integer>();
+    static void dfs(int src, ArrayList<ArrayList<Integer>> list, boolean vis[])
+    {
+       visi = vis;
+       for(int i=0; i<list.size(); i++) {
+            if(visi[i] == false) {
+                if(list.get(i).size() != 0 || i==0) System.out.print(i+" ");
+                visi[i] = true;
+                dfs_visit(i,list,list.size());
+            }
+        }
+    }
+    static void dfs_visit(int s, ArrayList<ArrayList<Integer>> adj, int v){
+    //while(a.top != NULL) {
+        //int data = a.pop();
+        Iterator<Integer> it = adj.get(s).iterator();
+        while(it.hasNext()) {
+            int data = it.next();
+            if(visi[data] == false) {
+                visi[data] = true;
+                System.out.print(data+" ");
+                //push(i);
+                dfs_visit(data,adj,v);
+            }
+        }
+    }
+}
