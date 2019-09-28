@@ -1,0 +1,46 @@
+class DetectCycle
+{
+    static boolean visi[];
+    static Stack<Integer> sck = new Stack<Integer>();
+    static boolean isCyclic(ArrayList<ArrayList<Integer>> list, int V)
+    {
+        visi = new boolean[V];
+        for(int i=0; i<V; i++) visi[i] = false;
+        boolean flag = true;
+        //Iterator<Integer> it = list.iterator;
+        for(int i=0; i<V;i++){
+            if(visi[i]==false) {
+                visi[i] = true;
+                sck.push(i);
+                //System.out.printf("-%s \n",sck.toString());
+                flag = dfs_visit(i,list,V);
+                //if(sck.size()>0)sck.pop();
+                //System.out.printf("-%s \n",sck.toString());
+                //System.out.println();
+                if(flag == false) return true;
+                sck.clear();
+            }
+        }
+        return false;
+    }
+    
+    static boolean dfs_visit(int s, ArrayList<ArrayList<Integer>> adj, int v){
+
+        boolean ret = true;
+        Iterator<Integer> it = adj.get(s).iterator();
+        while(it.hasNext()) {
+            int data = it.next();
+            if(sck.contains(data)) return false;
+            if(visi[data] == false) {
+                visi[data] = true;
+                sck.push(data);
+                //System.out.printf("-%s \n",sck.toString());
+                ret = dfs_visit(data,adj,v);
+                if(ret==false) break;
+            }
+        }
+        if(sck.size()>0)sck.pop();
+        //System.out.printf("-%s \n",sck.toString());
+        return ret;
+    }
+}
